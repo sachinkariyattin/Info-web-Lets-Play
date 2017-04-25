@@ -1,6 +1,12 @@
+<?php 
+    session_start();
+    if (! (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true)) {
+        header('Location: login.php');
+    }
+?>
 <html>
   <head>
-    <title>Bootstrap Admin Theme v3</title>
+    <title>Lets Play</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -35,8 +41,8 @@
 	                      <li class="dropdown">
 	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
 	                        <ul class="dropdown-menu animated fadeInUp">
-	                          <li><a href="profile.html">Profile</a></li>
-	                          <li><a href="login.html">Logout</a></li>
+	                          <li><a href="update_profile.php">Profile</a></li>
+	                          <li><a href="logout.php">Logout</a></li>
 	                        </ul>
 	                      </li>
 	                    </ul>
@@ -153,7 +159,7 @@
                     // output data of each row
                     while($row = $result->fetch_assoc()) {
                         if ($row["Player_ID"] != $_GET["user_id"]) {
-                            echo '<tr><td>'.$row["Player_ID"].'</td><td><a href="remove_player.php?user_id='.$_GET["user_id"].'&event_id='.$_GET["event_id"].'&player_id='.$row["Player_ID"].'">Remove User </a></td></tr>';
+                            echo '<tr><td>'.$row["Player_ID"].'</td><td><a href="remove_player.php?user_id='.$_GET["user_id"].'&event_id='.$_GET["event_id"].'&player_id='.$row["Player_ID"].'" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i> Remove User </a></td></tr>';
                         }
 
                     }
@@ -186,7 +192,7 @@
 </div>
 
 
-    <footer>
+   <!-- <footer>
          <div class="container">
          
             <div class="copy text-center">
@@ -194,7 +200,7 @@
             </div>
             
          </div>
-      </footer>
+      </footer>-->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>

@@ -1,3 +1,9 @@
+<?php 
+    session_start();
+    if (! (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true)) {
+        header('Location: login.php');
+    }
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,6 +13,16 @@
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- styles -->
     <link href="css/styles.css" rel="stylesheet">
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+   <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+   <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    
+  <script>
+  $( function() {
+    $( "#date" ).datepicker({ dateFormat: 'yy-mm-dd' });
+  } );
+  </script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -22,7 +38,7 @@
 	           <div class="col-md-5">
 	              <!-- Logo -->
 	              <div class="logo">
-	                 <h1><a href="user_home.html">Lets Play</a></h1>
+	                 <h1><a href="user_home.php">Lets Play</a></h1>
 	              </div>
 	           </div>
 	           <div class="col-md-5">
@@ -36,8 +52,8 @@
 	                      <li class="dropdown">
 	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
 	                        <ul class="dropdown-menu animated fadeInUp">
-	                          <li><a href="profile.html">Profile</a></li>
-	                          <li><a href="login.html">Logout</a></li>
+	                          <li><a href="update_profile.php">Profile</a></li>
+	                          <li><a href="logout.php">Logout</a></li>
 	                        </ul>
 	                      </li>
 	                    </ul>
@@ -136,7 +152,7 @@
                             <div class="form-group">
 								    <label class="col-sm-2 control-label">Date</label>
 								    <div class="col-sm-10">
-                                        <input type="date" name="date" value="<?php echo $date; ?>" class="form-control">
+                                        <input type="text" name="date" id ="date" value="<?php echo $date; ?>" class="form-control">
                                     </div>
                             </div>
                             <div class="form-group">
@@ -202,7 +218,9 @@
 
 
         if ($conn->query($sql) === TRUE) {
-            echo "Event Updated successfully";
+            echo '<script language="javascript">';
+            echo 'alert("Event Updated Successfully")';
+            echo '</script>';
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
@@ -214,4 +232,9 @@
         
         
     <?php endif; ?>
-          
+          <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+   <!-- <script src="https://code.jquery.com/jquery.js"></script>-->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/custom.js"></script>
+

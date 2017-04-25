@@ -1,7 +1,13 @@
+<?php 
+    session_start();
+    if (! (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true)) {
+        header('Location: login.php');
+    }
+?>
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bootstrap Admin Theme v3</title>
+    <title>Lets Play</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -36,8 +42,8 @@
 	                      <li class="dropdown">
 	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
 	                        <ul class="dropdown-menu animated fadeInUp">
-	                          <li><a href="profile.html">Profile</a></li>
-	                          <li><a href="login.html">Logout</a></li>
+	                          <li><a href="update_profile.php">Profile</a></li>
+	                          <li><a href="logout.php">Logout</a></li>
 	                        </ul>
 	                      </li>
 	                    </ul>
@@ -92,7 +98,7 @@
                                 $username = "root";
                                 $password = "1234567";
                                 $dbname = "infoweb";
-                                $logged_user = "USER_8";
+                                $logged_user = $_SESSION['login_user'];
 
                                 // Create connection
                                 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -110,6 +116,7 @@
                                     while($row = $result->fetch_assoc()) {
                                         echo "<tr><td>".$row["User_ID"]."</td><td>".$row["Location"]."</td><td>".$row["Game_Type"]."<td>".$row["Date"]."</td><td>".$row["Time"]."</td><td>".$row["Players_Reqd"]."</td><td>".$row["Joined"].'</td><td><a href="delete_event.php?user_id='.$row["User_ID"].'&event_id='.$row["Event_ID"].'" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Delete</a></td><td><a href="event_details.php?user_id='.$row["User_ID"].'&event_id='.$row["Event_ID"].'" class="btn btn-primary"><i class="glyphicon glyphicon-eye-open"></i> View Details</a></td></tr>';
                                     }
+                            
                                     echo "</table>";
                                 } else {
                                     echo "0 results";
@@ -125,15 +132,15 @@
 		</div>
     </div>
 
-    <footer>
+    <!--<footer>
          <div class="container">
          
             <div class="copy text-center">
-               Copyright 2014 <a href='#'>Website</a>
+               Copyright 2017 <a href='#'>Lets Play Website</a>
             </div>
             
          </div>
-      </footer>
+      </footer>-->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>

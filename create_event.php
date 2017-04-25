@@ -1,3 +1,9 @@
+<?php 
+    session_start();
+    if (! (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true)) {
+        header('Location: login.php');
+    }
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,6 +13,74 @@
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- styles -->
     <link href="css/styles.css" rel="stylesheet">
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+   <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+   <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    
+  <script>
+  $( function() {
+    $( "#date" ).datepicker({ dateFormat: 'yy-mm-dd' });
+  } );
+  </script>
+      
+      <?php
+            
+          $servername = "localhost";
+          $username = "root";
+          $password = "1234567";
+          $dbname = "infoweb";
+          $arr1 = array();
+          $arr2 = array();
+
+          $conn = new mysqli($servername, $username, $password, $dbname);
+
+          if ($conn->connect_error) {
+              die("Connection failed: " . $conn->connect_error);
+          }
+
+          $sql = "SELECT Name FROM Game";
+          $result = $conn->query($sql);
+
+          if ($result-> num_rows > 0) {
+              
+            while($row = $result->fetch_assoc()) {
+               $arr1[] = $row["Name"];
+              }
+          }
+
+          $sql = "SELECT Name FROM Location";
+          $result = $conn->query($sql);
+
+          if ($result-> num_rows > 0) {
+              
+            while($row = $result->fetch_assoc()) {
+               $arr2[] = $row["Name"];
+              }
+          }
+          $conn->close();
+            
+            ?>
+      
+      <script>
+          
+        $(document).ready(function(){$(function() {
+            var jArray1= <?php echo json_encode($arr1 ); ?>;
+            var jArray2= <?php echo json_encode($arr2 ); ?>;
+
+            $( "#game" ).autocomplete({
+               source: jArray1
+            });
+
+            $( "#location" ).autocomplete({
+               source: jArray2
+            });
+
+         });
+    });
+      </script>
+      
+     
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -22,7 +96,7 @@
 	           <div class="col-md-5">
 	              <!-- Logo -->
 	              <div class="logo">
-	                 <h1><a href="user_home.html">Lets Play</a></h1>
+	                 <h1><a href="user_home.php">Lets Play</a></h1>
 	              </div>
 	           </div>
 	           <div class="col-md-5">
@@ -36,8 +110,8 @@
 	                      <li class="dropdown">
 	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
 	                        <ul class="dropdown-menu animated fadeInUp">
-	                          <li><a href="profile.html">Profile</a></li>
-	                          <li><a href="login.html">Logout</a></li>
+	                          <li><a href="update_profile.php">Profile</a></li>
+	                          <li><a href="logout.php">Logout</a></li>
 	                        </ul>
 	                      </li>
 	                    </ul>
@@ -78,9 +152,8 @@ if (!empty($_POST)): ?>
     $date = $_POST["date"];
     $time = date('H:i:s', strtotime($_POST["time"]));
     $players_reqd = $_POST["p_reqd"];
-    $player_id = 'USER_8';
-    $event_id = '7';
-    $user_id = 'USER_8';
+    $player_id = $_SESSION['login_user'];
+    $user_id = $_SESSION['login_user'];
     
     
     $servername = "localhost";
@@ -97,6 +170,21 @@ if (!empty($_POST)): ?>
         die("Connection failed: " . $conn->connect_error);
     } 
     
+    $sql = "SELECT MAX(Event_ID) AS maxid FROM event";
+    
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            
+            $event_id = $row['maxid'] + 1;
+            
+        }
+        
+    }
+    else {
+        $event_id = 1;
+    }
     
 
     $sql = "INSERT INTO event (Event_ID, User_ID, Game_Type, Location, Date, Time, Player_ID, Players_Reqd) 
@@ -104,7 +192,9 @@ if (!empty($_POST)): ?>
     
 
     if ($conn->query($sql) === TRUE) {
-        echo "Event created successfully";
+        echo '<script language="javascript">';
+        echo 'alert("Event Created Successfully")';
+        echo '</script>';
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
@@ -127,25 +217,25 @@ if (!empty($_POST)): ?>
                                     <div class="form-group">
 								    <label  class="col-sm-2 control-label">Game</label>
 								    <div class="col-sm-10">
-								      <input type="text" class="form-control" id="game" name="game" placeholder="Game type">
+								      <input type="text" class="form-control" id="game" name="game" placeholder="Game type" required>
 								    </div>
 								  </div>
-								  <div class="form-group">
+								  <div class="form-group ">
 								    <label  class="col-sm-2 control-label">Location</label>
 								    <div class="col-sm-10">
-								      <input type="text" class="form-control" id="location" name="location" placeholder="Location">
+								      <input type="text" class="form-control" id="location" name="location" placeholder="Location" required>
 								    </div>
 								  </div>
 								  <div class="form-group">
 								    <label class="col-sm-2 control-label">Date</label>
 								    <div class="col-sm-10">
-								       <input type="date" class="form-control" id="date" name="date" placeholder="Date">
+								       <input type="text" class="form-control" id="date" name="date" placeholder="Date" required>
 								    </div>
 								  </div>
 								  <div class="form-group">
 								    <label class="col-sm-2 control-label">Time</label>
 								    <div class="col-sm-10">
-								       <input type="time" class="form-control" id="time" name="time" placeholder="Time">
+								       <input type="time" class="form-control" id="time" name="time" placeholder="Time" required>
 								    </div>
 								  </div>
                                   <div class="form-group">
@@ -164,6 +254,26 @@ if (!empty($_POST)): ?>
                     </div>
         </div>
             </div>
+            
+            
+  
 <?php endif; ?>
+            
+<!-- <footer>
+         <div class="container">
+         
+            <div class="copy text-center">
+               Copyright 2014 <a href='#'>Website</a>
+            </div>
+            
+         </div>
+      </footer> -->          
+                
 </body>
+          <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!--<script src="https://code.jquery.com/jquery.js"></script>-->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/custom.js"></script>
+    
 </html>

@@ -1,6 +1,12 @@
+<?php 
+    session_start();
+    if (! (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true)) {
+        header('Location: login.php');
+    }
+?>
 <html>
     <head>
-        <title>Join Event</title>
+        <title>Lets Play</title>
     </head>
     
     <body>
@@ -24,7 +30,7 @@
     
 
             if ($conn->query($sql) === TRUE) {
-                echo "Left event successfully";
+                header('Location:user_home.php');
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }
@@ -36,6 +42,10 @@
         
         
         
-        
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/custom.js"></script>
     </body>
 </html>

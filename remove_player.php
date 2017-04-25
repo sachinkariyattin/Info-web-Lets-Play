@@ -1,6 +1,12 @@
+<?php 
+    session_start();
+    if (! (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true)) {
+        header('Location: login.php');
+    }
+?>
 <html>
     <head>
-        <title>Join Event</title>
+        <title>Lets Play</title>
     </head>
     
     <body>
@@ -24,7 +30,10 @@
     
 
             if ($conn->query($sql) === TRUE) {
-                echo "Player Removed successfully";
+                echo '<script language="javascript">';
+                echo 'alert("Removed Successfully")';
+                header('Location:my_events.php');
+                echo '</script>';
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }

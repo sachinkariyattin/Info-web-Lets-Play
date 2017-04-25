@@ -154,16 +154,6 @@
                         <div class="panel-body">
                             <table class="table">
                      <?php 
-                            $sql = "INSERT INTO event (Event_ID, User_ID, Game_Type, Location, Date, Time, Player_ID, Players_Reqd) 
-                            VALUES ('$event_id', '$user_id', '$game_type', '$location', '$date', '$time', '$logged_user', '$players_reqd')";
-
-                            if ($conn->query($sql) === TRUE) {
-                                echo '<script language="javascript">';
-                                echo 'alert("Joined successfully")';
-                                echo '</script>';
-                            } else {
-                                echo "Error: " . $sql . "<br>" . $conn->error;
-                            }
                             
                             $sql = "SELECT Player_ID FROM event WHERE User_ID='$user_id' and Event_ID='$event_id'";
                             $result = $conn->query($sql);
