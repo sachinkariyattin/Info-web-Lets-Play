@@ -31,16 +31,17 @@
 	                 <h1><a href="user_home.php">Lets Play</a></h1>
 	              </div>
 	           </div>
-	           <div class="col-md-5">
+	           <div class="col-md-4">
 	              <div class="row">
 	              </div>
 	           </div>
-	           <div class="col-md-2">
+	           <div class="col-md-3">
 	              <div class="navbar navbar-inverse" role="banner">
 	                  <nav class="collapse navbar-collapse bs-navbar-collapse navbar-right" role="navigation">
 	                    <ul class="nav navbar-nav">
 	                      <li class="dropdown">
-	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
+                              
+	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i><?php echo $_SESSION['login_user']; ?><b class="caret"></b></a>
 	                        <ul class="dropdown-menu animated fadeInUp">
 	                          <li><a href="update_profile.php">Profile</a></li>
 	                          <li><a href="logout.php">Logout</a></li>
@@ -169,7 +170,7 @@
                                 echo "0 results";
                             }
 
-                         $conn->close();
+                         
                    ?>       
                         </table>
                 </div>
@@ -188,6 +189,58 @@
     </div>
 </div>
 </div>
+       
+    <div class="row">
+    <div class="col-md-2">
+		  	
+              
+    </div>
+     <div class="col-md-10">
+             <div class="row">
+		          <div class="col-md-8 panel-info">
+                      <div class="content-box-header panel-heading">
+	  					    <div class="panel-title ">Discussion Forum</div>
+						      
+		  			         </div>
+                <div class="content-box-large box-with-header">
+		  			 <div class="panel-body">
+                        <form action="add_post_join.php" method="post" class="form-horizontal">
+                            <div class="form-group"> 
+								<div class="col-sm-10">
+								    <textarea class="form-control" placeholder="Comment......" rows="3"  name="comment" required="required"></textarea>
+								</div>
+				            </div>
+                            <input type="hidden" name="ownerid" value="<?php echo $user_id; ?>">
+                            <input type="hidden" name="userid" value="<?php echo $logged_user; ?>">
+                            <input type="hidden" name="eventid" value="<?php echo $event_id; ?>">
+                            <div class="form-group">
+								<div class="col-sm-offset-8 col-sm-10">
+								    <input type="submit" value="Post" class="btn btn-primary">
+								</div>
+				            </div>
+                         </form>
+        <?php         
+                
+
+                $sql = "SELECT User_ID, Comment, Date FROM discussion WHERE Event_ID='$event_id' ORDER by Date DESC";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    // output data of each row
+                    while($row = $result->fetch_assoc()) {
+                        echo '<h4>'.$row["User_ID"].':</h4><i>'.$row["Date"].'</i><br><b>'. $row['Comment'].'</b><br>';
+
+                    }
+                } else {
+                    echo "0 discussions";
+                }
+            $conn->close();
+    ?>
+                         
+                      </div>
+                 </div>
+             </div>
+         </div>
        
       </div>
 
