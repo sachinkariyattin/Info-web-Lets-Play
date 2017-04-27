@@ -36,7 +36,7 @@
               die("Connection failed: " . $conn->connect_error);
           }
 
-          $sql = "SELECT Name FROM Game";
+          $sql = "SELECT Name FROM game";
           $result = $conn->query($sql);
 
           if ($result-> num_rows > 0) {
@@ -46,7 +46,7 @@
               }
           }
 
-          $sql = "SELECT Name FROM Location";
+          $sql = "SELECT Name FROM location";
           $result = $conn->query($sql);
 
           if ($result-> num_rows > 0) {
