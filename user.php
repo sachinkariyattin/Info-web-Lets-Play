@@ -1,7 +1,6 @@
 <?php
    include("config.php");
 
-   
    if($_SERVER["REQUEST_METHOD"] == "POST") {
        
        
@@ -47,16 +46,11 @@
    }
             
     $picpath = "profile_pics/".$new_file_name;
-       
-    $servername = "localhost";
-    $username = "root";
-    $password_1 = "1234567";
-    $dbname = "infoweb";
     
     
     if ($password === $confirmpasswd){
         // Create connection
-        $conn = new mysqli($servername, $username, $password_1, $dbname);
+        $conn = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
         // Check connection
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);

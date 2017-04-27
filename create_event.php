@@ -1,5 +1,6 @@
 <?php 
     session_start();
+    include("config.php");
     if (! (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true)) {
         header('Location: login.php');
     }
@@ -26,14 +27,10 @@
       
       <?php
             
-          $servername = "localhost";
-          $username = "root";
-          $password = "1234567";
-          $dbname = "infoweb";
           $arr1 = array();
           $arr2 = array();
 
-          $conn = new mysqli($servername, $username, $password, $dbname);
+          $conn = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
 
           if ($conn->connect_error) {
               die("Connection failed: " . $conn->connect_error);
@@ -157,15 +154,9 @@ if (!empty($_POST)): ?>
     $user_id = $_SESSION['login_user'];
     
     
-    $servername = "localhost";
-    $username = "root";
-    $password = "1234567";
-    $dbname = "infoweb";
-    
-    
 
     // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
     // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);

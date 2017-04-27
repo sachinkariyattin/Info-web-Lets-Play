@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 27, 2017 at 01:14 AM
+-- Generation Time: Apr 27, 2017 at 05:29 AM
 -- Server version: 5.7.18-log
 -- PHP Version: 5.6.25
 
@@ -34,30 +34,6 @@ CREATE TABLE `discussion` (
   `Date` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `discussion`
---
-
-INSERT INTO `discussion` (`User_ID`, `Event_ID`, `Comment`, `Comment_ID`, `Date`) VALUES
-('Prashanth Bhat', '1', 'Hey\r\nPrashant here', 6, '2017-04-26 08:18:06pm'),
-('Prashanth Bhat', '1', 'Prahsant user', 7, '2017-04-26 08:23:30pm'),
-('Prashanth Bhat', '1', 'hey\r\nprashant here', 8, '2017-04-26 08:40:47pm'),
-('Prashanth Bhat', '1', 'Posted by Prashanth', 11, '2017-04-26 09:18:13pm'),
-('Prashanth Bhat', '1', 'Prashanth me\r\nlets seeposting again', 13, '2017-04-26 09:20:38pm'),
-('Prashanth Bhat', '1', 'Prashanth posting from Join Event after leaving once', 14, '2017-04-26 09:21:36pm'),
-('Prashanth Bhat', '1', 'Checking order by', 15, '2017-04-26 09:26:20pm'),
-('Prashanth Bhat', '1', 'order by from view details', 16, '2017-04-26 09:26:39pm'),
-('Prashanth Bhat', '2', 'Prashanth joins and comments on new event rite away', 19, '2017-04-26 09:29:55pm'),
-('skariyat@indiana.edu', '1', 'sas', 3, '2017-04-26 07:58:54pm'),
-('skariyat@indiana.edu', '1', 'hi\r\n', 4, '2017-04-26 08:00:42pm'),
-('skariyat@indiana.edu', '1', 'Hello event 1', 5, '2017-04-26 08:17:17pm'),
-('skariyat@indiana.edu', '1', 'I think its working', 9, '2017-04-26 08:42:47pm'),
-('skariyat@indiana.edu', '1', 'This time its working', 10, '2017-04-26 09:06:54pm'),
-('skariyat@indiana.edu', '1', 'Ok\r\nSachin posting here', 12, '2017-04-26 09:19:32pm'),
-('skariyat@indiana.edu', '1', 'order by from owner', 17, '2017-04-26 09:27:03pm'),
-('skariyat@indiana.edu', '2', 'Ok\r\nThis is new event\r\nposted by Sachin', 18, '2017-04-26 09:29:20pm'),
-('test_id', '1', 'test_id\r\n', 20, '2017-04-27 12:46:31am');
-
 -- --------------------------------------------------------
 
 --
@@ -75,22 +51,6 @@ CREATE TABLE `event` (
   `Players_Reqd` int(100) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `event`
---
-
-INSERT INTO `event` (`Event_ID`, `User_ID`, `Game_Type`, `Location`, `Date`, `Time`, `Player_ID`, `Players_Reqd`) VALUES
-('1', 'skariyat@indiana.edu', 'Cricket', 'SRSC', '2017-04-29', '13:00:00', 'skariyat@indiana.edu', 10),
-('1', 'skariyat@indiana.edu', 'Cricket', 'SRSC', '2017-04-29', '13:00:00', 'Prashanth Bhat', 10),
-('2', 'skariyat@indiana.edu', 'kabbaddi', 'SRSC', '2017-04-29', '01:00:00', 'skariyat@indiana.edu', 10),
-('2', 'skariyat@indiana.edu', 'kabbaddi', 'SRSC', '2017-04-29', '01:00:00', 'Prashanth Bhat', 10),
-('1', 'skariyat@indiana.edu', 'Cricket', 'SRSC', '2017-04-29', '13:00:00', 'test_id', 10),
-('3', 'sachin', 'carrom', 'Basketball court', '2017-04-28', '01:00:00', 'sachin', 2),
-('3', 'sachin', 'carrom', 'Basketball court', '2017-04-28', '01:00:00', 'test_id', 2),
-('4', 'test_id', 'wresling', 'Stadium', '2017-04-28', '13:03:00', 'test_id', 2),
-('5', 'test_id', 'carrom', 'HC basketball court', '2017-04-20', '13:00:00', 'test_id', 2),
-('4', 'test_id', 'wresling', 'Stadium', '2017-04-28', '13:03:00', 'Sachin', 2);
-
 -- --------------------------------------------------------
 
 --
@@ -104,14 +64,6 @@ CREATE TABLE `feedback` (
   `email` varchar(40) DEFAULT NULL,
   `phone` varchar(10) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `feedback`
---
-
-INSERT INTO `feedback` (`feedback_id`, `feedback`, `name`, `email`, `phone`) VALUES
-(3, 'asas', 'Sachin Kariyattin', 'skariyat@indiana.edu', '8123692497'),
-(5, 'as', 'Sachin Kariyattin', 'skariyat@indiana.edu', '8123692497');
 
 -- --------------------------------------------------------
 
@@ -132,10 +84,9 @@ INSERT INTO `game` (`Game_ID`, `Name`) VALUES
 (1, 'Tennis'),
 (2, 'Cricket'),
 (3, 'Badminton'),
-(4, 'wresling'),
+(4, 'wrestling'),
 (5, 'carrom'),
-(6, 'kabbaddi'),
-(7, 'tested');
+(6, 'kabbaddi');
 
 -- --------------------------------------------------------
 
@@ -198,17 +149,6 @@ CREATE TABLE `user` (
   `userbio` varchar(200) DEFAULT NULL,
   `picpath` varchar(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `password`, `address`, `email`, `contact`, `dob`, `userbio`, `picpath`) VALUES
-('Prashanth Bhat', 'Prashanth', 'Bhat', 'abc123', '561 W Amaryllis Dr.', 'abc@gmail.com', '8123692497', '1990-12-01', 'xx', ''),
-('ABC', 'ABC', 'BCD', 'abc1234', 'sasas', 'abc@gmail.com', '812121', '2017-04-21', 'asad', ''),
-('test', 'a', 'a', 'a', 'asas', 'ac@gmail.com', '812121', '2017-04-12', 'asas', ''),
-('test_id', 'test_id', 'test_id', '1234567', 'test_id', 'test_id', '1212', '2017-04-17', 'asas', 'profile_pics/test_id.png'),
-('Sachin', 'Sachin', 'Kariyattin', 'abc123', '561 W Amaryllis Dr.', 'skariyat@indiana.edu', '8123692497', '2017-04-17', 'asas', 'profile_pics/Sachin.png');
 
 --
 -- Indexes for dumped tables

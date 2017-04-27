@@ -1,12 +1,14 @@
 <?php 
     session_start();
+    include("config.php");
     if (! (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true)) {
         header('Location: login.php');
     }
 ?>
 <?php
-   include('config.php');
    $user_check = $_SESSION['login_user'];
+
+   $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
    
    $ses_sql = mysqli_query($db,"select * from user where user_id = '$user_check' ");
    
@@ -64,17 +66,11 @@
    }
             
     $picpath = "profile_pics/".$new_file_name; 
-     
-        
-    $servername = "localhost";
-    $username = "root";
-    $password = "1234567";
-    $dbname = "infoweb";
-    
+
     
 
     // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
     // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);

@@ -9,6 +9,8 @@
    $user_id = $_SESSION['login_user'];
 
    $user_check = $_SESSION['login_user'];
+
+   $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
    
    $ses_sql = mysqli_query($db,"select * from user where user_id = '$user_check' ");
    

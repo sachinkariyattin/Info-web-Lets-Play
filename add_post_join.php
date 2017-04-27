@@ -5,6 +5,8 @@
         header('Location: login.php');
     }
     
+    include("config.php");
+    
     $comment = $_POST["comment"];
     $userid = $_POST['userid'];
     $eventid = $_POST['eventid'];
@@ -12,15 +14,9 @@
     $date =  date("Y-m-d h:i:sa");
     
     
-    $servername = "localhost";
-    $username = "root";
-    $password = "1234567";
-    $dbname = "infoweb";
-    
-    
 
     // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
     // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);

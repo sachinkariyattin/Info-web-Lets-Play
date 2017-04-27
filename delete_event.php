@@ -1,5 +1,6 @@
 <?php 
     session_start();
+    include("config.php");
     if (! (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true)) {
         header('Location: login.php');
     }
@@ -11,15 +12,11 @@
     
     <body>
     <?php 
-            $servername = "localhost";
-            $username = "root";
-            $password = "1234567";
-            $dbname = "infoweb";
             $user_id =$_GET['user_id'];
             $event_id = $_GET['event_id'];
         
             // Create connection
-            $conn = new mysqli($servername, $username, $password, $dbname);
+            $conn = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
             // Check connection
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
@@ -28,6 +25,14 @@
             $sql = "DELETE FROM EVENT WHERE User_ID='$user_id' AND Event_ID='$event_id'";
     
 
+            if ($conn->query($sql) === TRUE) {
+                header('Location:my_events.php');
+            } else {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+        
+            $sql = "DELETE FROM discussion WHERE Event_ID='$event_id'";
+        
             if ($conn->query($sql) === TRUE) {
                 header('Location:my_events.php');
             } else {

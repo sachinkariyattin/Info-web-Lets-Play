@@ -1,5 +1,6 @@
 <?php 
     session_start();
+    include("config.php")
     
 ?>
 <!DOCTYPE html>
@@ -40,13 +41,8 @@
     $user_id = $_POST["user_id"];
     $passwd = $_POST["passwd"];
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "1234567";
-    $dbname = "infoweb";
-
     // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
     // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);

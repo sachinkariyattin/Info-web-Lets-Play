@@ -1,5 +1,6 @@
 <?php 
     session_start();
+    include("config.php");
     if (! (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true)) {
         header('Location: login.php');
     }
@@ -84,16 +85,12 @@
 		  			         </div>
 		  			 <div class="content-box-large box-with-header">
         <?php 
-            $servername = "localhost";
-            $username = "root";
-            $password = "1234567";
-            $dbname = "infoweb";
             $user_id =$_GET['user_id'];
             $event_id = $_GET['event_id'];
             $logged_user = $_SESSION['login_user'];
         
             // Create connection
-            $conn = new mysqli($servername, $username, $password, $dbname);
+            $conn = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
             // Check connection
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);

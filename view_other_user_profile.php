@@ -8,6 +8,8 @@
     
 
    $user_check = $_GET['view_user'];
+
+   $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
    
    $ses_sql = mysqli_query($db,"select * from user where user_id = '$user_check' ");
    
@@ -107,7 +109,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
            <div class="col-md-6">
                <div class="content-box-large">
                    <div class="panel-heading">
-					            <div class="panel-title">Welcome <?php echo $login_session; ?></div>
+					            <div class="panel-title"></div>
 					        </div>
         <div class="panel-body">
                          <form action=" " method="post" class="form-horizontal">
