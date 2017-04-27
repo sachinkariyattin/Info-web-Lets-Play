@@ -3,10 +3,13 @@
 
    
    if($_SERVER["REQUEST_METHOD"] == "POST") {
-       $userid = $_POST["userName"];
+       
+       
+    $userid = $_POST["userName"];
     $firstname=$_POST["firstName"];
     $lastname=$_POST["lastName"];
     $password=$_POST["password"];
+    $confirmpasswd=$_POST["confirm_password"];
     $email=$_POST["userEmail"];
     $contact=$_POST["userContact"];
     $address=$_POST["userAddress"];
@@ -14,29 +17,65 @@
     $BIO=$_POST["userBIO"];
     
         
+    if(isset($_FILES['image'])){
+      $errors= array();
+      $file_name = $_FILES['image']['name'];
+      $file_size =$_FILES['image']['size'];
+      $file_tmp =$_FILES['image']['tmp_name'];
+      $file_type=$_FILES['image']['type'];
+      $file_ext=strtolower(end(explode('.',$_FILES['image']['name'])));
+      
+      $expensions= array("jpeg","jpg","png");
+      
+      if(in_array($file_ext,$expensions)=== false){
+         $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+      }
+      
+      if($file_size >= 2097152){
+         $errors[]='File size must be less than 2 MB';
+      }
+      
+      $temp = explode(".", $_FILES["file"]["name"]);
+      $new_file_name = $userid . '.' . $file_ext;
+          
+      if(empty($errors)==true){
+         move_uploaded_file($file_tmp,"profile_pics/".$new_file_name);
+         echo "Success";
+      }else{
+         print_r($errors);
+      }
+   }
+            
+    $picpath = "profile_pics/".$new_file_name;
+       
     $servername = "localhost";
     $username = "root";
     $password_1 = "1234567";
     $dbname = "infoweb";
     
     
+    if ($password === $confirmpasswd){
+        // Create connection
+        $conn = new mysqli($servername, $username, $password_1, $dbname);
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        } 
 
-    // Create connection
-    $conn = new mysqli($servername, $username, $password_1, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    } 
-    
-    $sql = "INSERT INTO user (user_id, first_name,last_name ,password,address,email,contact,dob,userbio) 
-    VALUES ('$userid', '$firstname',  '$lastname', '$password','$address','$email','$contact', '$date','$BIO')";
-    
+        $sql = "INSERT INTO user (user_id, first_name,last_name ,password,address,email,contact,dob,userbio,picpath) 
+        VALUES ('$userid', '$firstname',  '$lastname', '$password','$address','$email','$contact', '$date','$BIO','$picpath')";
 
-    if ($conn->query($sql) === TRUE) {
-        header('Location: login.php');    
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+
+        if ($conn->query($sql) === TRUE) {
+            header('Location: login.php');    
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
     }
+    else {
+        echo "<h3>Confirm password should match the password</h3>";
+    }
+   
 
    }
 ?>
@@ -57,6 +96,16 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+   <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+   <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    
+  <script>
+  $( function() {
+    $( "#userDOB" ).datepicker({ dateFormat: 'yy-mm-dd' });
+  } );
+  </script>
   </head>
    <body >
 	  	<div class="header">
@@ -97,67 +146,76 @@
 					            <div class="panel-title">Register</div>
 					        </div>
                      <div class="panel-body">
-                         <form action=" " method="post" class="form-horizontal">
+                         <form action=" " method="post" class="form-horizontal"  enctype="multipart/form-data">
                                   <div class="form-group">
 								    <label  class="col-sm-2 control-label">User Name</label>
 								    <div class="col-sm-10">
-								      <input type="text" class="form-control" name="userName" placeholder="Username">
+								      <input type="text" class="form-control" name="userName" placeholder="Username" required>
 								    </div>
 								  </div>
                                    <div class="form-group">
 								    <label  class="col-sm-2 control-label">First Name</label>
 								    <div class="col-sm-10">
-								      <input type="text" class="form-control" name="firstName" placeholder="First Name">
+								      <input type="text" class="form-control" name="firstName" placeholder="First Name" required>
 								    </div>
 								  </div>
                                      <div class="form-group">
 								    <label  class="col-sm-2 control-label">Last Name</label>
 								    <div class="col-sm-10">
-								      <input type="text" class="form-control" name="lastName" placeholder="Last Name">
+								      <input type="text" class="form-control" name="lastName" placeholder="Last Name" required>
 								    </div>
 								  </div>
                                  <div class="form-group">
 								    <label  class="col-sm-2 control-label">Password</label>
 								    <div class="col-sm-10">
-								      <input type="password" class="form-control" name="password" placeholder="Password">
+								      <input type="password" class="form-control" name="password" placeholder="Password" required>
 								    </div>
 								  </div>
                               <div class="form-group">
 								    <label  class="col-sm-2 control-label">Confirm Password</label>
 								    <div class="col-sm-10">
-								      <input type="password" class="form-control" name="confirm_password" placeholder="Password">
+								      <input type="password" class="form-control" name="confirm_password" placeholder="Password" required>
 								    </div>
 								  </div>
                              <div class="form-group">
 								    <label  class="col-sm-2 control-label">Email</label>
 								    <div class="col-sm-10">
-								      <input type="text" class="form-control" name="userEmail" placeholder="email">
+								      <input type="text" class="form-control" name="userEmail" placeholder="email" required>
 								    </div>
 								  </div>
                                <div class="form-group">
 								    <label  class="col-sm-2 control-label">Address</label>
 								    <div class="col-sm-10">
-								      <input type="text" class="form-control" name="userAddress" placeholder="Address">
+								      <input type="text" class="form-control" name="userAddress" placeholder="Address" required>
 								    </div>
 								  </div>
                               <div class="form-group">
 								    <label  class="col-sm-2 control-label">Contact</label>
 								    <div class="col-sm-10">
-								      <input type="text" class="form-control" name="userContact" placeholder="contact">
+								      <input type="text" class="form-control" name="userContact" placeholder="contact" required>
 								    </div>
 								  </div>
                     
                               <div class="form-group">
 								    <label  class="col-sm-2 control-label">Date of Birth</label>
 								    <div class="col-sm-10">
-								      <input type="date" class="form-control" name="userDOB" placeholder="Date of Birth">
+								      <input type="text" class="form-control" id = "userDOB" name="userDOB" placeholder="Date of Birth" required>
+								    </div>
+								  </div>
+                             <div class="form-group">
+								    <label  class="col-sm-2 control-label">Upload a picture</label>
+								    <div class="col-md-10">
+												<input type="file" class="btn btn-default" id="exampleInputFile" name="image">
+												<p class="help-block">
+													Profile picture
+												</p>
 								    </div>
 								  </div>
                              <div class="form-group">
 								    <label  class="col-sm-2 control-label">Biography</label>
 								    <div class="col-sm-10">
-								      <input type="text" class="form-control" name="userBIO" placeholder="Bio">
-								    </div>
+								    <textarea class="form-control" placeholder="Bio......" rows="3"  name="userBIO" required="required"></textarea>
+								</div>
 								  </div>
                              <div class="action">
                                 <input type = "submit" class="btn btn-primary signup"  value = "Register"/><br />
@@ -170,7 +228,7 @@
            
        </div>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery.js"></script>
+   <!-- <script src="https://code.jquery.com/jquery.js"></script>-->
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="js/custom.js"></script>

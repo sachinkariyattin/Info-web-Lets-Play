@@ -22,6 +22,7 @@
     $address=$row['address'];
     $date = $row['dob'];
     $BIO=$row['userbio'];
+    $picpath = $row['picpath'];
 ?>
 <?php
 if($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -97,7 +98,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 
              </div>
               <div class="sidebar content-box" style="display: block; text-align:center;">
-                <a href="create_event.php" class="btn btn-success btn-lg" type="button" >Create Event</a>
+                <a href="create_event.php" class="btn btn-success btn-lg" type="button" ><i class="glyphicon glyphicon-plus"></i> Create Event</a>
               
               </div>
             
@@ -145,7 +146,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                               <div class="form-group">
 								    <label  class="col-sm-2 control-label">Contact</label>
 								    <div class="col-sm-10">
-								      <label class="form-control"><?php echo $contact; ?>
+                                        <label class="form-control"><?php echo $contact; ?></label>
 								    </div>
 								  </div>
                     
@@ -162,6 +163,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 								    </div>
 								  </div>
                          </form>
+                   </div>
+               </div>
+           </div>
+           <div class="col-md-2">
+                    <div class="content-box-large">
+                        <div class="panel-body">
+                            <?php echo '<img src="'. $picpath . '" width = 125 height =150/>';?>
+                        </div>
+                        
+                </div>
+            </div>
+            </div>
+          </div>
+        </div>
+        
+            
 
     </body>
             <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

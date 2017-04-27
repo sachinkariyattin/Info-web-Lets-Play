@@ -118,7 +118,7 @@
                                 if ($result->num_rows > 0) {
                                     // output data of each row
                                     while($row = $result->fetch_assoc()) {
-                                        if ($row["User_ID"] != $logged_user ){
+                                        if ($row["User_ID"] != $logged_user && $row["Players_Reqd"] != $row["Joined"] ){
                                             echo '<tr><td>'.$row["User_ID"]."</td><td>".$row["Location"]."</td><td>".$row["Game_Type"]."<td>".$row["Date"]."</td><td>".$row["Time"]."</td><td>".$row["Players_Reqd"]."</td><td>".$row["Joined"].'</td><td><a href="join_event.php?user_id='.$row["User_ID"].'&event_id='.$row["Event_ID"].'" class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i> Join </a></td></tr>';
                                         }
 

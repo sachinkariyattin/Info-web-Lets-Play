@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2017 at 10:27 PM
+-- Generation Time: Apr 27, 2017 at 01:14 AM
 -- Server version: 5.7.18-log
 -- PHP Version: 5.6.25
 
@@ -55,7 +55,8 @@ INSERT INTO `discussion` (`User_ID`, `Event_ID`, `Comment`, `Comment_ID`, `Date`
 ('skariyat@indiana.edu', '1', 'This time its working', 10, '2017-04-26 09:06:54pm'),
 ('skariyat@indiana.edu', '1', 'Ok\r\nSachin posting here', 12, '2017-04-26 09:19:32pm'),
 ('skariyat@indiana.edu', '1', 'order by from owner', 17, '2017-04-26 09:27:03pm'),
-('skariyat@indiana.edu', '2', 'Ok\r\nThis is new event\r\nposted by Sachin', 18, '2017-04-26 09:29:20pm');
+('skariyat@indiana.edu', '2', 'Ok\r\nThis is new event\r\nposted by Sachin', 18, '2017-04-26 09:29:20pm'),
+('test_id', '1', 'test_id\r\n', 20, '2017-04-27 12:46:31am');
 
 -- --------------------------------------------------------
 
@@ -82,7 +83,13 @@ INSERT INTO `event` (`Event_ID`, `User_ID`, `Game_Type`, `Location`, `Date`, `Ti
 ('1', 'skariyat@indiana.edu', 'Cricket', 'SRSC', '2017-04-29', '13:00:00', 'skariyat@indiana.edu', 10),
 ('1', 'skariyat@indiana.edu', 'Cricket', 'SRSC', '2017-04-29', '13:00:00', 'Prashanth Bhat', 10),
 ('2', 'skariyat@indiana.edu', 'kabbaddi', 'SRSC', '2017-04-29', '01:00:00', 'skariyat@indiana.edu', 10),
-('2', 'skariyat@indiana.edu', 'kabbaddi', 'SRSC', '2017-04-29', '01:00:00', 'Prashanth Bhat', 10);
+('2', 'skariyat@indiana.edu', 'kabbaddi', 'SRSC', '2017-04-29', '01:00:00', 'Prashanth Bhat', 10),
+('1', 'skariyat@indiana.edu', 'Cricket', 'SRSC', '2017-04-29', '13:00:00', 'test_id', 10),
+('3', 'sachin', 'carrom', 'Basketball court', '2017-04-28', '01:00:00', 'sachin', 2),
+('3', 'sachin', 'carrom', 'Basketball court', '2017-04-28', '01:00:00', 'test_id', 2),
+('4', 'test_id', 'wresling', 'Stadium', '2017-04-28', '13:03:00', 'test_id', 2),
+('5', 'test_id', 'carrom', 'HC basketball court', '2017-04-20', '13:00:00', 'test_id', 2),
+('4', 'test_id', 'wresling', 'Stadium', '2017-04-28', '13:03:00', 'Sachin', 2);
 
 -- --------------------------------------------------------
 
@@ -188,16 +195,20 @@ CREATE TABLE `user` (
   `email` varchar(30) DEFAULT NULL,
   `contact` decimal(10,0) DEFAULT NULL,
   `dob` date DEFAULT NULL,
-  `userbio` varchar(200) DEFAULT NULL
+  `userbio` varchar(200) DEFAULT NULL,
+  `picpath` varchar(50) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `password`, `address`, `email`, `contact`, `dob`, `userbio`) VALUES
-('Sachin', 'Sachin', 'Kariyattin', 'abc123', '561 W Amaryllis Dr.', 'skariyat@indiana.edu', '8123692497', '1992-09-13', 'asas'),
-('Prashanth Bhat', 'Prashanth', 'Bhat', 'abc123', '561 W Amaryllis Dr.', 'abc@gmail.com', '8123692497', '1990-12-01', 'xx');
+INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `password`, `address`, `email`, `contact`, `dob`, `userbio`, `picpath`) VALUES
+('Prashanth Bhat', 'Prashanth', 'Bhat', 'abc123', '561 W Amaryllis Dr.', 'abc@gmail.com', '8123692497', '1990-12-01', 'xx', ''),
+('ABC', 'ABC', 'BCD', 'abc1234', 'sasas', 'abc@gmail.com', '812121', '2017-04-21', 'asad', ''),
+('test', 'a', 'a', 'a', 'asas', 'ac@gmail.com', '812121', '2017-04-12', 'asas', ''),
+('test_id', 'test_id', 'test_id', '1234567', 'test_id', 'test_id', '1212', '2017-04-17', 'asas', 'profile_pics/test_id.png'),
+('Sachin', 'Sachin', 'Kariyattin', 'abc123', '561 W Amaryllis Dr.', 'skariyat@indiana.edu', '8123692497', '2017-04-17', 'asas', 'profile_pics/Sachin.png');
 
 --
 -- Indexes for dumped tables

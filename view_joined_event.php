@@ -162,7 +162,7 @@
                             if ($result->num_rows > 0) {
                                 // output data of each row
                                 while($row = $result->fetch_assoc()) {
-                                    echo '<tr><td>'.$row["Player_ID"].'</td></tr>';
+                                    echo '<tr><td><a href="view_other_user_profile.php?view_user='.$row["Player_ID"].'">'.$row["Player_ID"].'</a></td></tr>';
 
                                 }
                                 

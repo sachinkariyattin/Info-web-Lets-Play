@@ -160,7 +160,7 @@
                     // output data of each row
                     while($row = $result->fetch_assoc()) {
                         if ($row["Player_ID"] != $_GET["user_id"]) {
-                            echo '<tr><td>'.$row["Player_ID"].'</td><td><a href="remove_player.php?user_id='.$_GET["user_id"].'&event_id='.$_GET["event_id"].'&player_id='.$row["Player_ID"].'" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i> Remove User </a></td></tr>';
+                            echo '<tr><td><a href="view_other_user_profile.php?view_user='.$row["Player_ID"].'">'.$row["Player_ID"].'</a></td><td><a href="remove_player.php?user_id='.$_GET["user_id"].'&event_id='.$_GET["event_id"].'&player_id='.$row["Player_ID"].'" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i> Remove User </a></td></tr>';
                         }
 
                     }

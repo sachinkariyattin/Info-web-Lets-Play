@@ -196,6 +196,7 @@ if (!empty($_POST)): ?>
         echo '<script language="javascript">';
         echo 'alert("Event Created Successfully")';
         echo '</script>';
+        header("Location: event_details.php?user_id=$user_id&event_id=$event_id");
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
