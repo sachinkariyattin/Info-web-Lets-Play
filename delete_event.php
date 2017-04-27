@@ -22,7 +22,7 @@
                 die("Connection failed: " . $conn->connect_error);
             }
     
-            $sql = "DELETE FROM EVENT WHERE User_ID='$user_id' AND Event_ID='$event_id'";
+            $sql = "DELETE FROM event WHERE User_ID='$user_id' AND Event_ID='$event_id'";
     
 
             if ($conn->query($sql) === TRUE) {

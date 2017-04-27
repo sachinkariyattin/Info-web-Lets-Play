@@ -157,7 +157,7 @@
                                     die("Connection failed: " . $conn->connect_error);
                                 } 
 
-                                $sql = "SELECT User_ID,Event_ID,Location,Game_Type,Date,Time,Players_Reqd FROM EVENT WHERE Player_ID='$logged_user'";
+                                $sql = "SELECT User_ID,Event_ID,Location,Game_Type,Date,Time,Players_Reqd FROM event WHERE Player_ID='$logged_user'";
 
                                 $result = $conn->query($sql);
 
