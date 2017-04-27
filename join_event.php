@@ -158,7 +158,7 @@
                                 echo 'alert("Joined successfully")';
                                 echo '</script>';
                             } else {
-                                echo "Error: " . $sql . "<br>" . $conn->error;
+                                //echo "Error: " . $sql . "<br>" . $conn->error;
                             }
                             
                             $sql = "SELECT Player_ID FROM event WHERE User_ID='$user_id' and Event_ID='$event_id'";

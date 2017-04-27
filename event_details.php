@@ -28,7 +28,7 @@
 	           <div class="col-md-5">
 	              <!-- Logo -->
 	              <div class="logo">
-	                 <h1><a href="user_home.html">Lets Play</a></h1>
+	                 <h1><a href="user_home.php">Lets Play</a></h1>
 	              </div>
 	           </div>
 	           <div class="col-md-4">
