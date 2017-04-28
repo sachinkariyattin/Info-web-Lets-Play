@@ -63,6 +63,7 @@
                     <li><a href="AddGame-new.php"><i class="glyphicon glyphicon-home"></i>Add Game</a></li>
                     <li class="current"><a href="AddLocation-new.php"><i class="glyphicon glyphicon-globe"></i>Add Location</a></li>
                     <li><a href="UserManagement.php"><i class="glyphicon glyphicon-user"></i>Manage Users</a></li>
+                    <li><a href="DispFeedback.php"><i class="glyphicon glyphicon-user"></i>Display Feedback</a></li>
                 </ul>
 		    </div>
       </div>
@@ -70,8 +71,7 @@
                             if (!empty($_POST)): ?>
 
                                 <?php
-                                $location = $_POST["location"];
-
+                                
                                 // Create connection
                                 $conn = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
                                 // Check connection
@@ -79,10 +79,17 @@
                                     die("Connection failed: " . $conn->connect_error);
                                 }
 
-                                $sql = "INSERT INTO Location(Name) VALUES('$location')";
+                                if($_POST['submit'] == "Add Location") {
+                                    $location = $_POST["location"];
+                                    $sql = "INSERT INTO location(Name) VALUES('$location')";
+                                }
+                                else {
+                                    $location = $_POST["del_location"];
+                                    $sql = "DELETE FROM location WHERE Name='$location'";
+                                }
 
                                 if ($conn->query($sql) === TRUE) {
-                                    echo "Location added successfully";
+                                    echo "Location added/deleted successfully";
                                 } else {
                                     echo "Error: " . $sql . "<br>" . $conn->error;
                                 }
@@ -92,6 +99,18 @@
                               ?>
 
                             <?php else: ?>
+
+                             <?php
+                                // Create connection
+                                $conn = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
+                                // Check connection
+                                if ($conn->connect_error) {
+                                    die("Connection failed: " . $conn->connect_error);
+                                }
+                                
+                                $sql = "SELECT Name FROM location";                                
+                                $result2 = $conn->query($sql);
+                              ?>
             
                             <div class="row">
 	  				         <div class="col-md-6">
@@ -106,14 +125,46 @@
                                           <div class="form-group">
 								    <label  class="col-sm-2 control-label">Location</label>
 								    <div class="col-sm-10">
-								      <input type="text" class="form-control" id="location" name="location" placeholder="Location" required>
+								      <input type="text" class="form-control" id="location" name="location" placeholder="Location">
 								    </div>
 								  </div>  
                                           <div class="form-group">
 								    <div class="col-sm-offset-2 col-sm-10">
-								      <input type="submit" value="Add Location" class="btn btn-primary">
+								      <input type="submit" name="submit" value="Add Location" class="btn btn-primary">
 								    </div>
-								  </div>                
+								  </div>     
+
+                  <div class="form-group">
+                    <label  class="col-sm-2 control-label">Location to be deleted</label>
+                    <div class="col-sm-10">
+                      
+                      <?php
+
+                      if ($result2-> num_rows > 0) {
+                          
+                          echo "<select name='del_location' class='form-control'>";
+                          while($row = $result2->fetch_assoc()) {
+                            echo '<option value="'.$row["Name"].'">'.$row["Name"].'</option>';
+                          }
+                          echo "</select>";
+                      } else {
+                          echo "<select name='del_location' class='form-control'>";
+                          echo '<option value="No">No location found</option>';
+                          echo "</select>";
+                      }
+
+                      $conn->close();
+
+                      ?>
+
+                    </div>
+                  </div> 
+
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <input type="submit" name="submit" value="Delete Location" class="btn btn-primary">
+                    </div>
+                  </div>
                                       </div>
                                   </div>
                                 </form>

@@ -63,6 +63,7 @@
                     <li class="current"><a href="AddGame-new.php"><i class="glyphicon glyphicon-home"></i>Add Game</a></li>
                     <li><a href="AddLocation-new.php"><i class="glyphicon glyphicon-globe"></i>Add Location</a></li>
                     <li><a href="UserManagement.php"><i class="glyphicon glyphicon-user"></i>Manage Users</a></li>
+                    <li><a href="DispFeedback.php"><i class="glyphicon glyphicon-user"></i>Display Feedback</a></li>
                 </ul>
 		    </div>
       </div>
@@ -72,8 +73,7 @@
                             if (!empty($_POST)): ?>
 
                                 <?php
-                                $game_name = $_POST["game_name"];
-
+                                
                                 // Create connection
                                 $conn = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
                                 // Check connection
@@ -81,10 +81,17 @@
                                     die("Connection failed: " . $conn->connect_error);
                                 }
 
-                                $sql = "INSERT INTO Game(Name) VALUES('$game_name')";
+                                if($_POST['submit'] == "Add Game") {
+                                    $game_name = $_POST["game_name"];
+                                    $sql = "INSERT INTO game(Name) VALUES('$game_name')";
+                                }
+                                else {
+                                    $game_name = $_POST["del_game_name"];
+                                    $sql = "DELETE FROM game WHERE Name='$game_name'";
+                                }
 
                                 if ($conn->query($sql) === TRUE) {
-                                    echo "Game added successfully";
+                                    echo "Game added/deleted successfully";
                                 } else {
                                     echo "Error: " . $sql . "<br>" . $conn->error;
                                 }
@@ -94,6 +101,18 @@
                               ?>
 
                               <?php else: ?>
+
+                                <?php
+                                // Create connection
+                                $conn = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
+                                // Check connection
+                                if ($conn->connect_error) {
+                                    die("Connection failed: " . $conn->connect_error);
+                                }
+                                
+                                $sql = "SELECT Name FROM game";                                
+                                $result2 = $conn->query($sql);
+                              ?>
             
                     <div class="row">
 	  				     <div class="col-md-6">
@@ -109,15 +128,46 @@
                                           <div class="form-group">
 								    <label  class="col-sm-2 control-label">Game Name</label>
 								    <div class="col-sm-10">
-								      <input type="text" class="form-control" id="game_name" name="game_name" placeholder="Game name" required>
+								      <input type="text" class="form-control" id="game_name" name="game_name" placeholder="Game name">
 								    </div>
 								  </div>
                                           
-                                          <div class="form-group">
+                  <div class="form-group">
 								    <div class="col-sm-offset-2 col-sm-10">
-								      <input type="submit" value="Add Game" class="btn btn-primary">
+								      <input type="submit" name="submit" value="Add Game" class="btn btn-primary">
 								    </div>
-								  </div>                
+								  </div>  
+
+                   <div class="form-group">
+                    <label  class="col-sm-2 control-label">Game to be deleted</label>
+                    <div class="col-sm-10">
+                      <?php
+
+                      if ($result2-> num_rows > 0) {
+                          
+                          echo "<select name='del_game_name' class='form-control'>";
+                          while($row = $result2->fetch_assoc()) {
+                            echo '<option value="'.$row["Name"].'">'.$row["Name"].'</option>';
+                          }
+                          echo "</select>";
+                      } else {
+                          echo "<select name='del_game_name' class='form-control'>";
+                          echo '<option value="No">No game found</option>';
+                          echo "</select>";
+                      }
+
+                      $conn->close();
+
+                      ?>
+                    </div>
+                  </div> 
+
+                  <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <input type="submit" name="submit" value="Delete Game" class="btn btn-primary">
+                    </div>
+                  </div>
+
                                       </div>
                                   </div>
                                   </form>
